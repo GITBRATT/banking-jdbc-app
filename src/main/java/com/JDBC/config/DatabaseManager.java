@@ -12,7 +12,7 @@ public class DatabaseManager {
     private static final String USERNAME_KEY = "db.username";
     private static final String URL_KEY = "db.url";
 
-    private static Connection open(){
+    public static Connection open(){
         try {
             return DriverManager.getConnection(
                     PropertiesUtil.getProperty(URL_KEY),
