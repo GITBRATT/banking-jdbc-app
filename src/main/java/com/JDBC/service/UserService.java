@@ -12,9 +12,9 @@ public class UserService {
                """;
        try(Connection connection = DatabaseManager.open()){
            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-           var generatedKeys = ps.getGeneratedKeys(); // Получаем текущий id
            ps.setString(1, name);
            ps.executeUpdate();
+           var generatedKeys = ps.getGeneratedKeys(); // Получаем текущий id - закрываеться вместе с Statemebt
            if (generatedKeys.next()) {
                var id = generatedKeys.getInt("id");
                System.out.println("User created, id = " + id);
@@ -33,8 +33,12 @@ public class UserService {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery()){
             while (rs.next()) {
-                System.out.println("User: id=" + rs.getLong("id") + ", name=" + rs.getString("name"));
+                System.out.println(
+                        "User{id=%d, user='%s'}"
+                                .formatted(rs.getLong("id"), rs.getString("name"))
+                );
             }
+
         }catch (Exception e) {
         e.printStackTrace();
         }

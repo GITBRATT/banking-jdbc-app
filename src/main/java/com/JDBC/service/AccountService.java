@@ -13,9 +13,9 @@ public class AccountService {
 
         try (Connection connection = DatabaseManager.open();
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
-            var generatedKeys = ps.getGeneratedKeys();
             ps.setLong(1, user_id);
             ps.executeUpdate();
+            var generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 var id = generatedKeys.getInt("id");
                 System.out.println("Account created, id = " + id);
@@ -40,8 +40,8 @@ public class AccountService {
              ResultSet rs = ps.executeQuery()){
             while (rs.next()) {
                 System.out.println(
-                        "Account{id=%d, user='%s', balance=%s}"
-                                .formatted(rs.getLong("id"), rs.getString("name"), rs.getDouble("balance"))
+                        "Account{id=%d, user='%s', balance=%.2f}"
+                                .formatted(rs.getLong("id"), rs.getString("name"), rs.getBigDecimal("balance"))
                 );
             }
         }catch (Exception e) {
