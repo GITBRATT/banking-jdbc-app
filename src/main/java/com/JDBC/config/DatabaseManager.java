@@ -9,7 +9,7 @@ import java.sql.SQLException;
 
 public class DatabaseManager {
     private static final String PASSWORD_KEY = "db.password";
-    private static final String USERNAME_KEY = "db.username";
+    private static final String USERNAME_KEY = "db.user";
     private static final String URL_KEY = "db.url";
 
     public static Connection open(){

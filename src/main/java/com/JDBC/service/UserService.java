@@ -4,6 +4,7 @@ import com.JDBC.config.DatabaseManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserService {
@@ -19,6 +20,21 @@ public class UserService {
        }catch (SQLException e){
            e.printStackTrace();
        }
+    }
 
+    public void printAllUsers() {
+        String sql = """
+                SELECT id,name
+                FROM users
+                """;
+        try (Connection connection = DatabaseManager.open();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery()){
+            while (rs.next()) {
+                System.out.println("User: id=" + rs.getLong("id") + ", name=" + rs.getString("name"));
+            }
+        }catch (Exception e) {
+        e.printStackTrace();
+        }
     }
 }
