@@ -38,8 +38,17 @@ public class Main {
                     return;
                 case 1:
                     System.out.println("Enter username: ");
-                    String username = reader.readLine();
-                    userService.createUser(username);
+                    String userName = reader.readLine();
+                    userService.createUser(userName);
+                case 2:
+                    System.out.println("Enter user_id: ");
+                    String userId = reader.readLine();
+                    accountService.createAccount(Long.valueOf(userId));
+                case 4:
+                    userService.printAllUsers();
+                case 5:
+                    accountService.printAllAccounts();
+
             }
         }
     }

@@ -2,10 +2,7 @@ package com.JDBC.service;
 
 import com.JDBC.config.DatabaseManager;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserService {
     public void createUser(String name) {
@@ -14,9 +11,14 @@ public class UserService {
                VALUES (?)
                """;
        try(Connection connection = DatabaseManager.open()){
-           PreparedStatement ps = connection.prepareStatement(sql);
+           PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+           var generatedKeys = ps.getGeneratedKeys(); // Получаем текущий id
            ps.setString(1, name);
            ps.executeUpdate();
+           if (generatedKeys.next()) {
+               var id = generatedKeys.getInt("id");
+               System.out.println("User created, id = " + id);
+           }
        }catch (SQLException e){
            e.printStackTrace();
        }
