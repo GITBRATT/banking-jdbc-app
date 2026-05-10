@@ -63,17 +63,13 @@ erDiagram
 
     TRANSACTIONS {
         INTEGER id PK
-        BIGINT from_account_id FK
-        BIGINT to_account_id FK
+        BIGINT from_account_id
+        BIGINT to_account_id
         NUMERIC amount
         TIMESTAMPTZ created_at
     }
 
     USERS ||--o{ ACCOUNTS : owns
-
-    ACCOUNTS ||--o{ TRANSACTIONS : sends
-
-    ACCOUNTS ||--o{ TRANSACTIONS : receives
 ```
 
 ---
